@@ -1,0 +1,7 @@
+is_lib = false
+name = "lem-in"
+
+[dependencies]
+libft = "https://github.com/glegendr/libft.git"
+libvec = "https://github.com/glegendr/libvec.git"
+libmatrice "https://github.com/glegendr/libmatrice.git"
