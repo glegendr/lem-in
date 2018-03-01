@@ -5,7 +5,7 @@ CFLAG=
 #CFLAG+= -Wextra
 #CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
-SRCNAME=get_next_line main
+SRCNAME=get_next_line main pars
 
 LIBS= ./dep/libft/libft.a ./dep/libmem/libmem.a ./dep/libvec/libvec.a
 
