@@ -5,11 +5,11 @@ CFLAG=
 #CFLAG+= -Wextra
 #CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
-SRCNAME=get_next_line main pars
+SRCNAME=get_next_line main pars make_matrice algo
 
-LIBS= ./dep/libft/libft.a ./dep/libmem/libmem.a ./dep/libvec/libvec.a
+LIBS= ./dep/libft/libft.a ./dep/libmem/libmem.a ./dep/libvec/libvec.a ./dep/libmatrice/libmatrice.a
 
-CC_LIBS= make -C ./dep/libft/; make -C ./dep/libmem/; make -C ./dep/libvec/;
+CC_LIBS= make -C ./dep/libft/; make -C ./dep/libmem/; make -C ./dep/libvec/; make -C ./dep/libmatrice/;
 
 INC_DIR_LIBS= -I ./dep/libft/inc/ -I ./dep/libmem/inc/ -I ./dep/libvec/inc/ -I ./dep/libmatrice/inc/
 

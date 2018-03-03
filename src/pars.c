@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 19:34:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/01 23:40:56 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/03 08:21:12 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int			into_vec(t_vec *vec, char **tab, int index, int *instruction)
 		free(tmp);
 		return (0);
 	}
+	t.nom = (char *)malloc(sizeof(char) * ft_strlen(tmp[0]));
 	t.nom = tmp[0];
-	t.x = ft_atoi(tmp[1]);
-	t.y = ft_atoi(tmp[2]);
 	t.special = *instruction;
 	*instruction = 0;
 	v_push(vec, &t);
@@ -48,7 +47,7 @@ int			check_instruction(char **tab, int i)
 		return (0);
 }
 
-int		pars(t_vec *vec, char **tab)
+char		**pars(t_vec *vec, char **tab, t_mat *mat)
 {
 	int i;
 	int instruction;
@@ -64,13 +63,19 @@ int		pars(t_vec *vec, char **tab)
 				break ;
 		++i;
 	}
+	tab = make_matrice(vec, i, mat, tab);
 	i = 0;
 	t_st t;
 	while (i < v_size(vec))
 	{
 		t = *(t_st *)v_get(vec, i);
-		printf("name = %s, x = %i, y = %i, entree ou sortie ? = %i\n", t.nom, t.x, t.y, t.special);
+		if (t.special == 0)
+		printf("name = %s, Simple\n", t.nom);
+		else if (t.special == 1)
+		printf("name = %s, Entree\n", t.nom);
+		else if (t.special == 2)
+		printf("name = %s, Sortie\n", t.nom);
 		++i;
 	}
-	return (ft_atoi(tab[0]));
+	return (tab);
 }

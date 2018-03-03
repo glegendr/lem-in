@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/01 23:38:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/03 08:45:20 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,66 @@ char		**tab_join(char **tab, char *s)
 	return (tmp);
 }
 
-int			main(void)
+char		**read_instructions(int *ant, char *fichier)
 {
-	char *s;
-	int i;
 	char **tab;
-	t_vec vec;
-	int fourmis;
-
-	i = 0;
-	while (get_next_line(0, &s) == 1)
+	char *s;
+	int fd = open(fichier, O_RDONLY);
+	tab = NULL;
+	s = NULL;
+	while (get_next_line(fd, &s) == 1)
 	{
 		tab = tab_join(tab, s);
 		free(s);
 	}
 	if (tab == NULL)
 	{
-		write(2, "ERROR\n", 5);
+		write(2, "ERROR\n", 6);
 		exit(1);
 	}
+	*ant = ft_atoi(tab[0]);
+	return (tab);
+}
+
+void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
+{
+	int i;
+
+	i = 0;
+	while (names[i])
+		++i;
+	rooms->names = (char **)malloc(sizeof(char *) * i);
+	i = 0;
+	while (names[i])
+	{
+		rooms->names[i] = (char *)malloc(sizeof(char) * ft_strlen(names[i]));
+		rooms->names[i] = names[i];
+		++i;
+	}
+	rooms->edges = mat;
+}
+
+int			main(int ac, char **argv)
+{
+	char **tab;
+	t_vec vec;
+	t_mat mat;
+	int ant;
+	t_rooms rooms;
+
+	tab = read_instructions(&ant, argv[1]);
+	if (ant <= 0)
+	{
+		free(tab);
+		write(2, "ERROR\n", 6);
+		return (0);
+	}
 	vec = v_new(sizeof(t_st));
-	fourmis = pars(&vec, tab);
-	printf("%i\n", fourmis);
-	//ft_putchar('\n');
-	//ft_putstarstr(tab);
+	tab = pars(&vec, tab, &mat);
+	v_del(&vec);
+	into_rooms(&rooms, tab, mat);
 	free(tab);
+	algo(&rooms, ant);
+	mat_del(&mat);
+	printf("fourmis = %i\n", ant);
 }
