@@ -15,8 +15,8 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft.h"
 # include "vector.h"
+# include "libft.h"
 # define BUFF_SIZE 12
 
 int			get_next_line(const int fd, char **line);

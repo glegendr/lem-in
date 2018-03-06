@@ -101,7 +101,7 @@ int			main(int ac, char **argv)
 	tab = pars(&vec, tab, &mat);
 	v_del(&vec);
 	into_rooms(&rooms, tab, mat);
-	free(tab);
+	//free(tab);
 	algo(&rooms, ant);
 	mat_del(&mat);
 	printf("fourmis = %i\n", ant);
