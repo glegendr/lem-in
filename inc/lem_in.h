@@ -6,13 +6,14 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 22:54:22 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/03 08:51:31 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/06 20:58:31 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 # include "vector.h"
+# include "matrice.h"
 
 typedef struct	s_st
 {
@@ -38,7 +39,8 @@ typedef struct	s_dij
 	int			lenght;
 }				t_dij;
 
+void			print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms);
 char			**pars(t_vec *vec, char **tmp, t_mat *mat);
 char			**make_matrice(t_vec*vec, int i, t_mat *mat, char **tab);
-void			algo(t_rooms *rooms, int fourmis);
+t_vec			algo(t_rooms *rooms, int fourmis, int *pathes);
 #endif

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/03 08:45:20 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/06 23:44:03 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int			main(int ac, char **argv)
 	t_mat mat;
 	int ant;
 	t_rooms rooms;
+	int pathes;
 
+	pathes = 0;
 	tab = read_instructions(&ant, argv[1]);
 	if (ant <= 0)
 	{
@@ -101,8 +103,7 @@ int			main(int ac, char **argv)
 	tab = pars(&vec, tab, &mat);
 	v_del(&vec);
 	into_rooms(&rooms, tab, mat);
-	//free(tab);
-	algo(&rooms, ant);
+	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
 	mat_del(&mat);
-	printf("fourmis = %i\n", ant);
+	printf("fourmis = %i, pathes = %i\n", ant, pathes);
 }

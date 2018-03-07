@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/03 08:15:16 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/06 23:45:11 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	i = 0;
 	y = 0;
 	x = 0;
+
+	if (liaisons[0] == NULL)
+		return;
 	while (ft_strcmp(names[i], liaisons[0]) != 0 && names[i])
 	{
 		++i;
@@ -97,6 +100,6 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 			into_mat(mat, liaisons, names);
 			free(liaisons);
 		}
-	mat_print(mat, 1);
+	//mat_print(mat, 1);
 	return (names);
 }

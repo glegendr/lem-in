@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 19:34:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/03 08:21:12 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/07 00:38:20 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char		**pars(t_vec *vec, char **tab, t_mat *mat)
 
 	i = 1;
 	instruction = 0;
+	printf("Ici !\n");
 	while (tab[i])
 	{
 		if (tab[i][0] == '#')

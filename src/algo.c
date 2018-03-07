@@ -6,13 +6,96 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/03 09:07:22 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/07 01:51:58 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "matrice.h"
 #include "lem_in.h"
+
+int			is_start_or_end_connected(t_mat *mat)
+{
+	int i;
+	int cp;
+	
+	cp = 0;
+	i = 0;
+	while (i < mat_size(mat))
+	{
+		if (mat_get(mat, 0, i) == 1)
+		{
+				cp += 1;
+				break ;
+		}
+		++i;
+	}
+	i = 0;
+	while (i < mat_size(mat))
+	{
+		if (mat_get(mat, 1, i) == 1)
+		{
+				cp += 1;
+				break ;
+		}
+		++i;
+	}
+	if (cp == 2)
+		return (1);
+	return (0);
+}
+
+int			is_way_acceptable(t_vec *ways, int ant)
+{
+	int i;
+	int y;
+	int size;
+
+	i = 0;
+	y = 0;
+	size = 0;
+	printf("%i\n", v_size((t_vec *)v_get(ways, v_size(ways) - 1)));
+	if (v_size(ways) < 1)
+		return (1);
+	while (i < v_size(ways))
+	{
+		size += v_size((t_vec *)v_get(ways, i)) - 1;
+		++i;
+	}
+	if ((ant + size) / v_size(ways) - 1 >
+			(ant + size + v_size((t_vec *)v_get(ways, i - 1)) - 1) /
+			(v_size(ways) + 1) - 1)
+		return (1);
+	return (0);
+}
+
+int			nb_of_pathes(t_vec *ways, int ant)
+{
+	int i;
+	int y;
+	t_vec way;
+	int ret;
+	int size;
+
+	i = 0;
+	size = 0;
+	ret = 2147483647;
+	while (i < v_size(ways))
+	{
+		way = *(t_vec *)v_get(ways, i);
+		size += v_size(&way) - 1;
+		if (ret > ((ant + size) / (i + 1)) - 1)
+			ret = ((ant + size) / (i + 1)) - 1;
+		else
+		{
+			v_del(&way);
+			return (i);
+		}
+		++i;
+		v_del(&way);
+	}
+	return (i);
+}
 
 t_vec		v_del_path(t_vec *queue, t_mat *edges)
 {
@@ -44,6 +127,20 @@ t_vec		v_del_path(t_vec *queue, t_mat *edges)
 	}
 }
 
+int			isn_t_in_vec(t_vec *vec, int nb)
+{
+	int i;
+
+	i = 0;
+	while (i < v_size(vec))
+	{
+		if (nb == *(int *)v_get(vec, i))
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
 int			push_children(t_vec *queue, t_mat *edges)
 {
 	int i;
@@ -58,16 +155,22 @@ int			push_children(t_vec *queue, t_mat *edges)
 	parent = *(t_vec *)v_pop(queue);
 	while (i < mat_size(edges))
 	{
-		if (mat_get(edges, *(int *)v_get(&parent, v_size(&parent) - 1), i) == 1)
+		if (mat_get(edges, *(int *)v_get(&parent, v_size(&parent) - 1), i) == 1
+				&& isn_t_in_vec(&parent, i) == 1)
 		{
 			child = v_copy(&parent);
 			v_push_int(&child, i);
+		//	int y = 0;
+		//	while (y < v_size(&child))
+		//		printf("%i\n", *(int *)v_get(&child, y++));
+		//	printf("-------\n");
 			v_push(queue, &child);
 			if (i == 1)
 				ret = 1;
 		}
 		++i;
 	}
+	v_del(&parent);
 	return (ret);
 }
 
@@ -76,6 +179,7 @@ t_vec		dijkstra(t_rooms *rooms)
 	t_vec queue;
 	t_vec way;
 	int ret;
+	int i = 0;
 
 	way = v_new(sizeof(int));
 	queue = v_new(sizeof(t_vec));
@@ -88,7 +192,7 @@ t_vec		dijkstra(t_rooms *rooms)
 	return (v_del_path(&queue, &rooms->edges));
 }
 
-void		algo(t_rooms *rooms, int ant)
+t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 {
 	t_vec way;
 	t_vec ways;
@@ -97,13 +201,20 @@ void		algo(t_rooms *rooms, int ant)
 
 	i = 0;
 	y = 0;
+	//mat_print(&rooms->edges, 1);
 	ways = v_new(sizeof(t_vec));
+	printf("dij\n");
 	way = dijkstra(rooms);
 	while (v_size(&way) > 1)
 	{
 		v_push(&ways, &way);
+		if (!is_way_acceptable(&ways, ant) ||
+				!is_start_or_end_connected(&rooms->edges))
+			break ;
+	printf("dij\n");
 		way = dijkstra(rooms);
 	}
+	/*Start Printing*/
 	while (i < v_size(&ways))
 	{
 		way = *(t_vec *)v_get(&ways, i);
@@ -118,5 +229,7 @@ void		algo(t_rooms *rooms, int ant)
 		printf("\n");
 		++i;
 	}
-	return ;
+	/*End of Print*/
+	*pathes = nb_of_pathes(&ways, ant);
+	return (ways);
 }

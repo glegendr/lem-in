@@ -5,7 +5,7 @@ CFLAG=
 #CFLAG+= -Wextra
 #CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
-SRCNAME=get_next_line main pars make_matrice algo
+SRCNAME=get_next_line main pars make_matrice algo print_ant
 
 LIBS= ./dep/libft/libft.a ./dep/libmem/libmem.a ./dep/libvec/libvec.a ./dep/libmatrice/libmatrice.a
 
