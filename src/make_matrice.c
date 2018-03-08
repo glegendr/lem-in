@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/06 23:45:11 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/08 03:04:25 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,13 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	if (liaisons[0] == NULL)
 		return;
 	while (ft_strcmp(names[i], liaisons[0]) != 0 && names[i])
-	{
 		++i;
-	}
 	if (ft_strcmp(names[i], liaisons[0]) != 0)
 		exit(1);
 	x = i;
 	i = 0;
 	while (ft_strcmp(names[i], liaisons[1]) != 0 && names[i])
-	{
 		++i;
-	}
 	if (ft_strcmp(names[i], liaisons[1]) != 0)
 		exit(1);
 	y = i;
@@ -85,7 +81,7 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 	entry_and_end(vec);
 	*mat = mat_new(v_size(vec));
 	ini_mat(mat, v_size(vec));
-	names = (char **)malloc(v_size(vec) + 1);
+	names = (char **)malloc(sizeof(char *) * (v_size(vec) + 1));
 	while (i < v_size(vec))
 	{
 		t = *(t_st *)v_get(vec, i);
@@ -100,6 +96,5 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 			into_mat(mat, liaisons, names);
 			free(liaisons);
 		}
-	//mat_print(mat, 1);
 	return (names);
 }

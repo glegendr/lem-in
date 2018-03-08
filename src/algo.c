@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/07 01:51:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/08 03:10:53 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int			is_way_acceptable(t_vec *ways, int ant)
 	i = 0;
 	y = 0;
 	size = 0;
-	printf("%i\n", v_size((t_vec *)v_get(ways, v_size(ways) - 1)));
 	if (v_size(ways) < 1)
 		return (1);
 	while (i < v_size(ways))
@@ -92,7 +91,6 @@ int			nb_of_pathes(t_vec *ways, int ant)
 			return (i);
 		}
 		++i;
-		v_del(&way);
 	}
 	return (i);
 }
@@ -160,10 +158,6 @@ int			push_children(t_vec *queue, t_mat *edges)
 		{
 			child = v_copy(&parent);
 			v_push_int(&child, i);
-		//	int y = 0;
-		//	while (y < v_size(&child))
-		//		printf("%i\n", *(int *)v_get(&child, y++));
-		//	printf("-------\n");
 			v_push(queue, &child);
 			if (i == 1)
 				ret = 1;
@@ -201,9 +195,7 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 
 	i = 0;
 	y = 0;
-	//mat_print(&rooms->edges, 1);
 	ways = v_new(sizeof(t_vec));
-	printf("dij\n");
 	way = dijkstra(rooms);
 	while (v_size(&way) > 1)
 	{
@@ -211,25 +203,8 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 		if (!is_way_acceptable(&ways, ant) ||
 				!is_start_or_end_connected(&rooms->edges))
 			break ;
-	printf("dij\n");
 		way = dijkstra(rooms);
 	}
-	/*Start Printing*/
-	while (i < v_size(&ways))
-	{
-		way = *(t_vec *)v_get(&ways, i);
-		y = 0;
-		while (y < v_size(&way))
-		{
-			printf("%i", *(int *)v_get(&way, y));
-			++y;
-			if (y < v_size(&way))
-				printf("->");
-		}
-		printf("\n");
-		++i;
-	}
-	/*End of Print*/
 	*pathes = nb_of_pathes(&ways, ant);
 	return (ways);
 }

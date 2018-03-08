@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/06 23:44:03 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/08 03:13:21 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,5 @@ int			main(int ac, char **argv)
 	into_rooms(&rooms, tab, mat);
 	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
 	mat_del(&mat);
-	printf("fourmis = %i, pathes = %i\n", ant, pathes);
+//	while (1);
 }

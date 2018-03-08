@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 22:54:22 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/06 20:58:31 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/08 00:10:55 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_ant
 {
 	int			name;
 	int			room;
+	int			*way;
 }				t_ant;
 
 typedef struct	s_dij
