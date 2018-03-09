@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   make_matrice.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+///*                                                    +:+ +:+         +:+     */
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 03:04:25 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:20:08 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,18 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	i = 0;
 	y = 0;
 	x = 0;
-
 	if (liaisons[0] == NULL)
-		return;
-	while (ft_strcmp(names[i], liaisons[0]) != 0 && names[i])
+		return ;
+	while (ft_strcmp(names[i], liaisons[0]))
+	{
 		++i;
-	if (ft_strcmp(names[i], liaisons[0]) != 0)
-		exit(1);
+		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[0]))
+			error("");
+	}
 	x = i;
 	i = 0;
 	while (ft_strcmp(names[i], liaisons[1]) != 0 && names[i])
 		++i;
-	if (ft_strcmp(names[i], liaisons[1]) != 0)
-		exit(1);
 	y = i;
 	mat_set(mat, y, x, 1);
 	mat_set(mat, x, y, 1);
@@ -94,7 +93,7 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 		{
 			liaisons = ft_strsplit(tab[index - 1], '-');
 			into_mat(mat, liaisons, names);
-			free(liaisons);
+		//	del_tab(liaisons);
 		}
 	return (names);
 }

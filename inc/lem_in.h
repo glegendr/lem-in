@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 22:54:22 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 00:10:55 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 00:38:55 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct	s_dij
 	int			lenght;
 }				t_dij;
 
+void			del_tab(char **tab);
+void			error(char *s);
 void			print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms);
 char			**pars(t_vec *vec, char **tmp, t_mat *mat);
 char			**make_matrice(t_vec*vec, int i, t_mat *mat, char **tab);

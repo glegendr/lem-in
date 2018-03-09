@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 03:09:25 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:51:05 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ void		print_ant_s_travel(t_ant ant_info, char **names, int *ant_max)
 	ft_putchar('-');
 	ft_putstr(names[ant_info.room]);
 	ft_putchar(' ');
+}
+
+int			search_end(int *way)
+{
+	int i;
+
+	i = 0;
+//	printf("SALUT%i\n", i);
+	while (way[i] != 1)
+		++i;
+	return (i);
 }
 
 void		next_room(t_ant *ant_info, t_vec *ant, int i)
@@ -51,7 +62,7 @@ void		next_room(t_ant *ant_info, t_vec *ant, int i)
 	while (i-- > 0)
 	{
 		ant_info_less = *(t_ant *)v_get(ant, i);
-		if (ant_info_less.room == ant_info->way[y + 1])
+		if (ant_info_less.room == ant_info->way[y + 1] && (ant_info_less.room != 1 || search_end(ant_info->way) < 2))
 			return;
 	}
 	ant_info->room = ant_info->way[y + 1];
@@ -102,11 +113,11 @@ void		ant_s_travel(t_vec ways, int *ants, char **names, int pathes)
 		while (i < v_size(&ant))
 		{
 			next_room(v_get(&ant, i), &ant, i);
-			print_ant_s_travel(*(t_ant *)v_get(&ant, i), names, &ant_max);
-			++i;
+			print_ant_s_travel(*(t_ant *)v_get(&ant, i++), names, &ant_max);
 		}
 		ft_putchar('\n');
 	}
+	//v_del(&ant);
 }
 
 void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
@@ -115,6 +126,7 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 	int		*ant_each;
 	int		i;
 	int		size_bef;
+	int y;
 
 	size_bef = 0;
 	i = 0;
@@ -148,4 +160,6 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 		++i;
 	}
 	ant_s_travel(ways, ant_each, rooms->names, pathes);
+	//free(ant_each);
+//	v_del(&ways);
 }

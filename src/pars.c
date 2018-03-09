@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 19:34:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 03:56:37 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:20:25 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void		check_vector(t_vec *vec)
 		++i;
 	}
 	if (inst != 2)
-	{
-		write(2, "ERROR\n", 6);
-		exit(1);
-	}
+		error("");
 }
 
 int			into_vec(t_vec *vec, char **tab, int index, int *instruction)
@@ -49,24 +46,26 @@ int			into_vec(t_vec *vec, char **tab, int index, int *instruction)
 		++i;
 	if (i != 3)
 	{
-		free(tmp);
+	//	free(tmp);
 		return (0);
 	}
-	t.nom = (char *)malloc(sizeof(char) * ft_strlen(tmp[0]));
+	if ((t.nom = (char *)malloc(sizeof(char) * ft_strlen(tmp[0]))) == 0)
+		exit(1);
 	t.nom = tmp[0];
 	t.special = *instruction;
 	*instruction = 0;
 	v_push(vec, &t);
+	i = 0;
+//	while(tmp[i])
+//		free(tmp[i++]);
+//	free(tmp);
 	return (1);
 }
 
 int			check_instruction(char **tab, int i, int *ad)
 {
 	if (*ad != 10 && *ad != 11 && *ad != 1 && *ad != 0)
-	{
-		write(2, "ERROR\n", 6);
-		exit(1);
-	}
+		error("");
 	if (!ft_strcmp(tab[i], "##start"))
 	{
 		*ad += 10;
@@ -100,11 +99,8 @@ char		**pars(t_vec *vec, char **tab, t_mat *mat)
 		++i;
 	}
 	if (check_ad != 11)
-	{
-		write(2, "ERROR\n", 6);
-		exit(1);
-	}
+		error("");
 	check_vector(vec);
-	tab = make_matrice(vec, i, mat, tab);
-	return (tab);
+	//del_tab(tab);
+	return (make_matrice(vec, i, mat, tab));
 }

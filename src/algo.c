@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 03:10:53 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:30:11 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,31 @@
 #include "matrice.h"
 #include "lem_in.h"
 
+void		del_queue(t_vec *vec)
+{
+	t_vec *tmp;
+
+	while (v_size(vec) > 0)
+	{
+		tmp = (t_vec *)v_pop(vec);
+		//		v_del(tmp);
+	}
+	//	v_del(vec);
+}
+
 int			is_start_or_end_connected(t_mat *mat)
 {
 	int i;
 	int cp;
-	
+
 	cp = 0;
 	i = 0;
 	while (i < mat_size(mat))
 	{
 		if (mat_get(mat, 0, i) == 1)
 		{
-				cp += 1;
-				break ;
+			cp += 1;
+			break ;
 		}
 		++i;
 	}
@@ -35,8 +47,8 @@ int			is_start_or_end_connected(t_mat *mat)
 	{
 		if (mat_get(mat, 1, i) == 1)
 		{
-				cp += 1;
-				break ;
+			cp += 1;
+			break ;
 		}
 		++i;
 	}
@@ -87,7 +99,7 @@ int			nb_of_pathes(t_vec *ways, int ant)
 			ret = ((ant + size) / (i + 1)) - 1;
 		else
 		{
-			v_del(&way);
+			//			v_del(&way);
 			return (i);
 		}
 		++i;
@@ -120,8 +132,10 @@ t_vec		v_del_path(t_vec *queue, t_mat *edges)
 				}
 				++y;
 			}
+			del_queue(queue);
 			return (tmp);
 		}
+		//		v_del(&tmp);
 	}
 }
 
@@ -161,10 +175,11 @@ int			push_children(t_vec *queue, t_mat *edges)
 			v_push(queue, &child);
 			if (i == 1)
 				ret = 1;
+			//	v_del(&child);
 		}
 		++i;
 	}
-	v_del(&parent);
+	//	v_del(&parent);
 	return (ret);
 }
 
@@ -180,7 +195,12 @@ t_vec		dijkstra(t_rooms *rooms)
 	v_push_int(&way, 0);
 	v_push(&queue, &way);
 	while ((ret = push_children(&queue, &rooms->edges)) == 0)
+	{
+		//		printf("%i\n", v_size(&queue));
+		//	if (v_size(&queue) > 3000)
+		//		printf("HIih\n");
 		v_sort_size(&queue);
+	}
 	if (ret == -1)
 		return (way);
 	return (v_del_path(&queue, &rooms->edges));
@@ -206,5 +226,16 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 		way = dijkstra(rooms);
 	}
 	*pathes = nb_of_pathes(&ways, ant);
+	/*y = 0;
+	while (y < v_size(&ways))
+	{
+	i = 0;
+		way = *(t_vec *)v_get(&ways, y);
+		while (i < v_size(&way))
+			printf("%i ", *(int *)v_get(&way, i++));
+		printf("\n");
+		++y;
+	}
+	printf("fin\n");*/
 	return (ways);
 }

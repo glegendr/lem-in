@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/08 03:13:21 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:19:40 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,44 @@
 #include "get_next_line.h"
 #include "matrice.h"
 #include "lem_in.h"
+
+void		del_vec_t_st(t_vec *vec)
+{
+	t_st *t;
+	int i;
+
+	i = 0;
+	while (i < v_size(vec))
+	{
+		t = v_get(vec, i);
+//		free(t->nom);
+		++i;
+	}
+	//v_del(vec);
+}
+
+void		del_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+//		free(tab[i]);
+		++i;
+	}
+//	free(tab);
+}
+
+void		error(char *s)
+{
+	write(2, "ERROR", 5);
+	if (s[0] != '\0')
+		write(2, ": ", 2);
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
+	exit(1);
+}
 
 char		**tab_join(char **tab, char *s)
 {
@@ -37,7 +75,7 @@ char		**tab_join(char **tab, char *s)
 		tmp[i] = ft_strdup(tab[i]);
 		++i;
 	}
-	free(tab);
+	del_tab(tab);
 	tmp[i] = ft_strdup(s);
 	tmp[i + 1] = NULL;
 	return (tmp);
@@ -47,19 +85,28 @@ char		**read_instructions(int *ant, char *fichier)
 {
 	char **tab;
 	char *s;
+	int i;
+
 	int fd = open(fichier, O_RDONLY);
 	tab = NULL;
 	s = NULL;
 	while (get_next_line(fd, &s) == 1)
 	{
 		tab = tab_join(tab, s);
-		free(s);
+//		free(s);
 	}
 	if (tab == NULL)
 	{
-		write(2, "ERROR\n", 6);
-		exit(1);
+		del_tab(tab);
+		error("");
 	}
+	i = 0;
+	while (tab[0][i++])
+		if (tab[0][i - 1] > '9' || tab[0][i - 1] < '0')
+		{
+			del_tab(tab);
+			error("ant number is not well formed");
+		}
 	*ant = ft_atoi(tab[0]);
 	return (tab);
 }
@@ -95,15 +142,15 @@ int			main(int ac, char **argv)
 	tab = read_instructions(&ant, argv[1]);
 	if (ant <= 0)
 	{
-		free(tab);
-		write(2, "ERROR\n", 6);
-		return (0);
+		del_tab(tab);
+		error("ant number is not well formed");
 	}
 	vec = v_new(sizeof(t_st));
 	tab = pars(&vec, tab, &mat);
-	v_del(&vec);
 	into_rooms(&rooms, tab, mat);
 	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
 	mat_del(&mat);
-//	while (1);
+	del_vec_t_st(&vec);
+	//del_tab(tab);
+//		while (1);
 }
