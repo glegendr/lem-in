@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/09 01:30:11 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/12 23:49:16 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,11 @@ t_vec		dijkstra(t_rooms *rooms)
 		v_sort_size(&queue);
 	}
 	if (ret == -1)
+	{
+		v_del(&queue);
 		return (way);
+	}
+	v_del(&way);
 	return (v_del_path(&queue, &rooms->edges));
 }
 
