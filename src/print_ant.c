@@ -6,13 +6,30 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/09 01:51:05 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/12 23:24:14 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 #include <stdio.h>
+
+void		del_vec_t_ant(t_vec *vec, int *tab, int pathes)
+{
+	int i;
+	int ant_max;
+
+	ant_max = 0;
+	i = 0;
+		free(((t_ant *)v_get(vec, 0))->way);
+	while (i < pathes)
+	{
+		ant_max += tab[i];
+		free(((t_ant *)v_get(vec, ant_max))->way);
+		++i;
+	}
+	v_del(vec);
+}
 
 void		print_ant_s_travel(t_ant ant_info, char **names, int *ant_max)
 {
@@ -73,8 +90,7 @@ void		ini_ant(t_vec *ant, int ant_max, t_vec ways, int name)
 	t_ant ant_info;
 	int i;
 
-	i = v_size(&ways);
-	ant_info.way = (int *)malloc(sizeof(int) * i);
+	ant_info.way = (int *)malloc(sizeof(int) * v_size(&ways));
 	i = 0;
 	while (i < v_size(&ways))
 	{
@@ -91,19 +107,18 @@ void		ini_ant(t_vec *ant, int ant_max, t_vec ways, int name)
 	}
 }
 
-void		ant_s_travel(t_vec ways, int *ants, char **names, int pathes)
+void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
 {
 	int ant_max;
 	int i;
 	t_vec ant;
-	t_ant ant_info;
 
 	i = 0;
 	ant_max = 0;
 	ant = v_new(sizeof(t_ant));
-	while (ants[i])
+	while (i < pathes)
 	{
-		ini_ant(&ant, ants[i], *(t_vec *)v_get(&ways, i), ant_max + 1);
+		ini_ant(&ant, ants[i], *(t_vec *)v_get(ways, i), ant_max + 1);
 		ant_max += ants[i];
 		++i;
 	}
@@ -117,7 +132,7 @@ void		ant_s_travel(t_vec ways, int *ants, char **names, int pathes)
 		}
 		ft_putchar('\n');
 	}
-	//v_del(&ant);
+	del_vec_t_ant(&ant, ants, pathes);
 }
 
 void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
@@ -159,7 +174,8 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 		}
 		++i;
 	}
-	ant_s_travel(ways, ant_each, rooms->names, pathes);
-	//free(ant_each);
+	t_vec vec = *(t_vec *)v_get(&ways, 0);
+	ant_s_travel(&ways, ant_each, rooms->names, pathes);
+	free(ant_each);
 //	v_del(&ways);
 }

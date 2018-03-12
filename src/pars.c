@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 19:34:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/09 01:20:25 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/12 22:47:58 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void		check_vector(t_vec *vec)
 	while (i < v_size(vec))
 	{
 		t = *(t_st *)v_get(vec, i);
-			if (t.special == 1 || t.special == 2)
-				inst += 1;
+		if (t.special == 1 || t.special == 2)
+			inst += 1;
 		++i;
 	}
 	if (inst != 2)
@@ -46,19 +46,22 @@ int			into_vec(t_vec *vec, char **tab, int index, int *instruction)
 		++i;
 	if (i != 3)
 	{
-	//	free(tmp);
+		i = 0;
+		while(tmp[i])
+			free(tmp[i++]);
+		free(tmp);
 		return (0);
 	}
-	if ((t.nom = (char *)malloc(sizeof(char) * ft_strlen(tmp[0]))) == 0)
-		exit(1);
-	t.nom = tmp[0];
+	//	if ((t.nom = (char *)malloc(sizeof(char) * ft_strlen(tmp[0]))) == 0)
+	//		exit(1);
+	t.nom = ft_strdup(tmp[0]);
 	t.special = *instruction;
 	*instruction = 0;
 	v_push(vec, &t);
 	i = 0;
-//	while(tmp[i])
-//		free(tmp[i++]);
-//	free(tmp);
+	while(tmp[i])
+		free(tmp[i++]);
+	free(tmp);
 	return (1);
 }
 

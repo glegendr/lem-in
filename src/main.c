@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/09 01:19:40 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/12 23:25:08 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@
 
 void		del_vec_t_st(t_vec *vec)
 {
-	t_st *t;
 	int i;
 
 	i = 0;
 	while (i < v_size(vec))
 	{
-		t = v_get(vec, i);
-//		free(t->nom);
+		free(((t_st *)v_get(vec, i))->nom);
 		++i;
 	}
-	//v_del(vec);
+	v_del(vec);
 }
 
 void		del_tab(char **tab)
@@ -37,10 +35,10 @@ void		del_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-//		free(tab[i]);
+		free(tab[i]);
 		++i;
 	}
-//	free(tab);
+	free(tab);
 }
 
 void		error(char *s)
@@ -86,15 +84,18 @@ char		**read_instructions(int *ant, char *fichier)
 	char **tab;
 	char *s;
 	int i;
+	int ret;
 
 	int fd = open(fichier, O_RDONLY);
 	tab = NULL;
 	s = NULL;
-	while (get_next_line(fd, &s) == 1)
+	while ((ret = get_next_line(fd, &s)) == 1)
 	{
 		tab = tab_join(tab, s);
-//		free(s);
+		free(s);
 	}
+	if (ret == -1)
+		error("read error");
 	if (tab == NULL)
 	{
 		del_tab(tab);
@@ -118,14 +119,15 @@ void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
 	i = 0;
 	while (names[i])
 		++i;
-	rooms->names = (char **)malloc(sizeof(char *) * i);
+	rooms->names = (char **)malloc(sizeof(char *) * i + 1);
 	i = 0;
 	while (names[i])
 	{
-		rooms->names[i] = (char *)malloc(sizeof(char) * ft_strlen(names[i]));
-		rooms->names[i] = names[i];
+	//	rooms->names[i] = (char *)malloc(sizeof(char) * ft_strlen(names[i]));
+		rooms->names[i] = ft_strdup(names[i]);
 		++i;
 	}
+	rooms->names[i] = NULL;
 	rooms->edges = mat;
 }
 
@@ -149,8 +151,9 @@ int			main(int ac, char **argv)
 	tab = pars(&vec, tab, &mat);
 	into_rooms(&rooms, tab, mat);
 	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
-	mat_del(&mat);
 	del_vec_t_st(&vec);
-	//del_tab(tab);
+	mat_del(&mat);
+	del_tab(tab);
+	del_tab(rooms.names);
 //		while (1);
 }
