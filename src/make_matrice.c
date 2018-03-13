@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/12 23:45:24 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/13 21:47:33 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 	while (i < v_size(vec))
 	{
 		t = *(t_st *)v_get(vec, i);
-	//	names[i] = (char *)malloc(sizeof(char) * ft_strlen(t.nom));
 		names[i++] = ft_strdup(t.nom);
 	}
 	names[i] = NULL;

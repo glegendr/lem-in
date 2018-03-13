@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/12 23:25:08 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/13 22:04:58 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ int			main(int ac, char **argv)
 	int ant;
 	t_rooms rooms;
 	int pathes;
-
 	pathes = 0;
 	tab = read_instructions(&ant, argv[1]);
 	if (ant <= 0)
