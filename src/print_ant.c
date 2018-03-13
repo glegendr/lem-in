@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/12 23:24:14 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/14 00:18:58 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,5 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 	t_vec vec = *(t_vec *)v_get(&ways, 0);
 	ant_s_travel(&ways, ant_each, rooms->names, pathes);
 	free(ant_each);
-//	v_del(&ways);
+	v_del(&ways);
 }

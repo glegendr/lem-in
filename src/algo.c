@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/13 23:10:56 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/14 00:15:46 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ void		del_queue(t_vec *vec)
 	i = 0;
 	while (i < v_size(vec))
 	{
-		printf("%i\n", i);
 		tmp = v_get(vec, i);
 		v_del(tmp);
-				++i;
+		++i;
 	}
-		v_del(vec);
+	v_del(vec);
 }
 
 int			is_start_or_end_connected(t_mat *mat)
@@ -103,7 +102,7 @@ int			nb_of_pathes(t_vec *ways, int ant)
 			ret = ((ant + size) / (i + 1)) - 1;
 		else
 		{
-			//			v_del(&way);
+		//				v_del(&way);
 			return (i);
 		}
 		++i;
@@ -142,6 +141,7 @@ t_vec		v_del_path(t_vec *queue, t_mat *edges)
 		//v_del(v_get(queue, v_size(queue)));
 		v_del(&tmp);
 	}
+	return (tmp);
 }
 
 int			isn_t_in_vec(t_vec *vec, int nb)
@@ -169,7 +169,6 @@ int			push_children(t_vec *queue, t_mat *edges)
 	i = 0;
 	if (v_size(queue) < 1)
 		return (-1);
-	printf("%i\n", v_size(queue));
 	parent = *(t_vec *)v_pop(queue);
 	//v_del(v_get(queue, v_size(queue)));
 	while (i < mat_size(edges))
@@ -182,20 +181,20 @@ int			push_children(t_vec *queue, t_mat *edges)
 			v_push(queue, &child);
 			if (i == 1)
 				ret = 1;
-			int y = 0;
-			while (y < v_size(&parent))
-				printf("%i ", *(int *)v_get(&parent, y++));
-					printf("\n");
-//				v_del(&child);
+			//			int y = 0;
+			//			while (y < v_size(&parent))
+			//				printf("%i ", *(int *)v_get(&parent, y++));
+			//					printf("\n");
+			//				v_del(&child);
 		}
 		++i;
 	}
-	int y = 0;
-			while (y < v_size(&parent))
-				printf("%i ", *(int *)v_get(&parent, y++));
-					printf("\n");
-	printf("\n");
-		v_del(&parent);
+	//	int y = 0;
+	//			while (y < v_size(&parent))
+	//				printf("%i ", *(int *)v_get(&parent, y++));
+	//					printf("\n");
+	//	printf("\n");
+	//		v_del(&parent);
 	return (ret);
 }
 
@@ -211,9 +210,9 @@ t_vec		dijkstra(t_rooms *rooms)
 	v_push(&queue, &way);
 	while ((ret = push_children(&queue, &rooms->edges)) == 0)
 	{
-	//			printf("%i\n", v_size(&queue));
-	//		if (v_size(&queue) > 3000)
-	//			printf("HIih\n");
+		//			printf("%i\n", v_size(&queue));
+		//		if (v_size(&queue) > 3000)
+		//			printf("HIih\n");
 		v_sort_size(&queue);
 	}
 	if (ret == -1)
@@ -236,7 +235,7 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 	y = 0;
 	ways = v_new(sizeof(t_vec));
 	way = dijkstra(rooms);
-//	printf("DIJ\n");
+	//	printf("DIJ\n");
 	while (v_size(&way) > 1)
 	{
 		v_push(&ways, &way);
@@ -244,19 +243,19 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 				!is_start_or_end_connected(&rooms->edges))
 			break ;
 		way = dijkstra(rooms);
-//	printf("DIJ\n");
+		//	printf("DIJ\n");
 	}
 	*pathes = nb_of_pathes(&ways, ant);
 	/*y = 0;
-	while (y < v_size(&ways))
-	{
-	i = 0;
-		way = *(t_vec *)v_get(&ways, y);
-		while (i < v_size(&way))
-			printf("%i ", *(int *)v_get(&way, i++));
-		printf("\n");
-		++y;
-	}
-	printf("fin\n");*/
+	  while (y < v_size(&ways))
+	  {
+	  i = 0;
+	  way = *(t_vec *)v_get(&ways, y);
+	  while (i < v_size(&way))
+	  printf("%i ", *(int *)v_get(&way, i++));
+	  printf("\n");
+	  ++y;
+	  }
+	  printf("fin\n");*/
 	return (ways);
 }
