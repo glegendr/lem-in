@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/13 22:04:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/20 22:59:32 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,4 @@ int			main(int ac, char **argv)
 	mat_del(&mat);
 	del_tab(tab);
 	del_tab(rooms.names);
-//		while (1);
 }

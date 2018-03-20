@@ -6,13 +6,28 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/14 00:18:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/20 22:55:14 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 #include <stdio.h>
+
+
+void		del_ways(t_vec *vec)
+{
+	int i;
+
+	i = 0;
+	while (i < v_size(vec))
+	{
+//		print_vec(vec);
+		v_del((t_vec *)v_get(vec, i));
+		++i;
+	}
+	v_del(vec);
+}
 
 void		del_vec_t_ant(t_vec *vec, int *tab, int pathes)
 {
@@ -137,6 +152,10 @@ void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
 
 void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 {
+//	printf("salut\n");
+//	print_vec(&ways);
+//	printf("---\n");
+//	return ;
 	t_vec	way;
 	int		*ant_each;
 	int		i;
@@ -177,5 +196,5 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 	t_vec vec = *(t_vec *)v_get(&ways, 0);
 	ant_s_travel(&ways, ant_each, rooms->names, pathes);
 	free(ant_each);
-	v_del(&ways);
+	del_ways(&ways);
 }

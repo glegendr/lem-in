@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 22:54:22 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/09 00:38:55 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/20 22:57:15 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ typedef struct	s_ant
 	int			*way;
 }				t_ant;
 
-typedef struct	s_dij
-{
-	char		*come_from;
-	int			lenght;
-}				t_dij;
-
+t_vec			dijkstra(t_rooms *rooms);
+void			print_vec(t_vec *vec);
+void			print_non_queue(t_vec *vec);
 void			del_tab(char **tab);
+void			del_ways(t_vec *vec);
 void			error(char *s);
 void			print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms);
 char			**pars(t_vec *vec, char **tmp, t_mat *mat);
