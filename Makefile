@@ -1,9 +1,9 @@
 NAME=lem-in
 CC=gcc
 CFLAG=
-#CFLAG+= -Werror
-#CFLAG+= -Wextra
-#CFLAG+= -Wall
+CFLAG+= -Werror
+CFLAG+= -Wextra
+CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
 SRCNAME=get_next_line main pars make_matrice algo print_ant print_vec dijkstra
 

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/20 22:59:32 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/21 00:40:01 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ char		**tab_join(char **tab, char *s)
 
 char		**read_instructions(int *ant, char *fichier)
 {
-	char **tab;
-	char *s;
-	int i;
-	int ret;
+	char	**tab;
+	char	*s;
+	int		i;
+	int		ret;
+	int		fd = open(fichier, O_RDONLY);
 
-	int fd = open(fichier, O_RDONLY);
 	tab = NULL;
 	s = NULL;
 	while ((ret = get_next_line(fd, &s)) == 1)
@@ -119,11 +119,11 @@ void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
 	i = 0;
 	while (names[i])
 		++i;
-	rooms->names = (char **)malloc(sizeof(char *) * i + 1);
+	if ((rooms->names = (char **)malloc(sizeof(char *) * i + 1)) == NULL)
+		return ;
 	i = 0;
 	while (names[i])
 	{
-	//	rooms->names[i] = (char *)malloc(sizeof(char) * ft_strlen(names[i]));
 		rooms->names[i] = ft_strdup(names[i]);
 		++i;
 	}
@@ -133,12 +133,14 @@ void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
 
 int			main(int ac, char **argv)
 {
-	char **tab;
-	t_vec vec;
-	t_mat mat;
-	int ant;
-	t_rooms rooms;
-	int pathes;
+	(void)ac;
+	char	**tab;
+	t_vec	vec;
+	t_mat	mat;
+	int		ant;
+	t_rooms	rooms;
+	int		pathes;
+
 	pathes = 0;
 	tab = read_instructions(&ant, argv[1]);
 	if (ant <= 0)

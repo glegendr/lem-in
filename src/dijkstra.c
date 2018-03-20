@@ -6,18 +6,17 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 21:46:18 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/20 22:58:12 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/21 00:41:49 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <stdio.h>
 
 void		del_pathes(t_mat *mat, t_vec vec)
 {
 	int i;
 	int y;
-	
+
 	y = 1;
 	mat_set(mat, *(int *)v_get(&vec, y), 0, 0);
 	mat_set(mat, 0, *(int *)v_get(&vec, y), 0);
@@ -62,19 +61,16 @@ int			make_children(t_vec *queue, t_mat *edges)
 	tmp = v_copy(v_get(queue, v_size(queue) - 1));
 	v_del(v_get(queue, v_size(queue) - 1));
 	v_del_last(queue);
-	while (i < mat_size(edges) && ret == 0)
-	{
-		if (mat_get(edges, *(int *)v_get(&tmp, v_size(&tmp) - 1), i) == 1 &&
-				isn_t_in_vec(&tmp, i) == 1)
+	while (i++ < mat_size(edges) && ret == 0)
+		if (mat_get(edges, *(int *)v_get(&tmp, v_size(&tmp) - 1), i - 1) == 1
+				&& isn_t_in_vec(&tmp, i - 1) == 1)
 		{
 			child = v_copy(&tmp);
-			v_push_int(&child, i);
+			v_push_int(&child, i - 1);
 			v_push_first(queue, &child);
-			if (i == 1)
+			if (i - 1 == 1)
 				ret = 1;
 		}
-		++i;
-	}
 	v_del(&tmp);
 	return (ret);
 }
@@ -85,7 +81,6 @@ t_vec		dijkstra(t_rooms *rooms)
 	t_vec	way;
 	int		ret;
 
-//	mat_print(&rooms->edges, 1);
 	way = v_new(sizeof(int));
 	queue = v_new(sizeof(t_vec));
 	v_push_int(&way, 0);
@@ -97,7 +92,5 @@ t_vec		dijkstra(t_rooms *rooms)
 	del_pathes(&rooms->edges, *(t_vec *)v_get(&queue, 0));
 	way = v_copy((t_vec *)v_get(&queue, 0));
 	del_ways(&queue);
-//	printf("\n");
-//	mat_print(&rooms->edges, 1);
 	return (way);
 }

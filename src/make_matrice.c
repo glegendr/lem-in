@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   make_matrice.c                                     :+:      :+:    :+:   */
-///*                                                    +:+ +:+         +:+     */
+/*                                                    +:+ +:+         +:+     */
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/13 21:47:33 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/21 00:45:46 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void		entry_and_end(t_vec *vec)
 {
-	t_st t;
-	int i;
+	t_st	t;
+	int		i;
 
 	i = 0;
 	while (i < v_size(vec))
@@ -51,9 +51,8 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 
 	i = 0;
 	y = 0;
-	x = 0;
-	if (liaisons[0] == NULL)
-		return ;
+	if (liaisons[0] == NULL || liaisons[1] == NULL || liaisons[2] != NULL)
+		error("");
 	while (ft_strcmp(names[i], liaisons[0]))
 	{
 		++i;
@@ -63,7 +62,11 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	x = i;
 	i = 0;
 	while (ft_strcmp(names[i], liaisons[1]) != 0 && names[i])
+	{
 		++i;
+		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[0]))
+			error("");
+	}
 	y = i;
 	mat_set(mat, y, x, 1);
 	mat_set(mat, x, y, 1);
@@ -71,10 +74,10 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 
 char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 {
-	int i;
-	char **names;
-	char **liaisons;
-	t_st t;
+	int		i;
+	char	**names;
+	char	**liaisons;
+	t_st	t;
 
 	i = 0;
 	entry_and_end(vec);
