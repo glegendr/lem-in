@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 19:34:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/21 00:46:43 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/27 20:55:16 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ int			check_instruction(char **tab, int i, int *ad)
 		return (0);
 }
 
-char		**pars(t_vec *vec, char **tab, t_mat *mat)
+char		**pars(char **tab, t_mat *mat)
 {
-	int i;
-	int instruction;
-	int check_ad;
+	int		i;
+	int		instruction;
+	int		check_ad;
+	t_vec	vec;
 
+	vec = v_new(sizeof(t_st));
 	check_ad = 0;
 	i = 1;
 	instruction = 0;
@@ -116,12 +118,12 @@ char		**pars(t_vec *vec, char **tab, t_mat *mat)
 		if (tab[i][0] == '#')
 			instruction = check_instruction(tab, i, &check_ad);
 		else if (tab[i][0] != '#')
-			if (!into_vec(vec, tab, i, &instruction))
+			if (!into_vec(&vec, tab, i, &instruction))
 				break ;
 		++i;
 	}
 	if (check_ad != 11)
 		error("");
-	check_vector(vec);
-	return (make_matrice(vec, i, mat, tab));
+	check_vector(&vec);
+	return (make_matrice(&vec, i, mat, tab));
 }

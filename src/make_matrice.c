@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/21 00:45:46 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/27 20:59:41 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 			into_mat(mat, liaisons, names);
 			del_tab(liaisons);
 		}
-	del_tab(tab);
+	del_tab_and_t_st(tab, vec);
 	return (names);
 }

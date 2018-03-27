@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/21 00:40:01 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/27 20:54:53 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,6 @@
 #include "get_next_line.h"
 #include "matrice.h"
 #include "lem_in.h"
-
-void		del_vec_t_st(t_vec *vec)
-{
-	int i;
-
-	i = 0;
-	while (i < v_size(vec))
-	{
-		free(((t_st *)v_get(vec, i))->nom);
-		++i;
-	}
-	v_del(vec);
-}
-
-void		del_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		++i;
-	}
-	free(tab);
-}
 
 void		error(char *s)
 {
@@ -94,13 +68,8 @@ char		**read_instructions(int *ant, char *fichier)
 		tab = tab_join(tab, s);
 		free(s);
 	}
-	if (ret == -1)
+	if (ret == -1 || tab == NULL)
 		error("read error");
-	if (tab == NULL)
-	{
-		del_tab(tab);
-		error("");
-	}
 	i = 0;
 	while (tab[0][i++])
 		if (tab[0][i - 1] > '9' || tab[0][i - 1] < '0')
@@ -133,14 +102,13 @@ void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
 
 int			main(int ac, char **argv)
 {
-	(void)ac;
 	char	**tab;
-	t_vec	vec;
 	t_mat	mat;
 	int		ant;
 	t_rooms	rooms;
 	int		pathes;
 
+	(void)ac;
 	pathes = 0;
 	tab = read_instructions(&ant, argv[1]);
 	if (ant <= 0)
@@ -148,11 +116,9 @@ int			main(int ac, char **argv)
 		del_tab(tab);
 		error("ant number is not well formed");
 	}
-	vec = v_new(sizeof(t_st));
-	tab = pars(&vec, tab, &mat);
+	tab = pars(tab, &mat);
 	into_rooms(&rooms, tab, mat);
 	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
-	del_vec_t_st(&vec);
 	mat_del(&mat);
 	del_tab(tab);
 	del_tab(rooms.names);

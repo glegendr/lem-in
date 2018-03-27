@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/21 00:42:09 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/27 20:37:27 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 	int		y;
 	int		i;
 
+	(void)ant;
 	i = 0;
 	y = 0;
 	ways = v_new(sizeof(t_vec));
@@ -102,11 +103,10 @@ t_vec		algo(t_rooms *rooms, int ant, int *pathes)
 	while (v_size(&way) > 1)
 	{
 		v_push(&ways, &way);
-		if (!is_way_acceptable(&ways, ant) ||
-				!is_start_or_end_connected(&rooms->edges))
+		if (!is_start_or_end_connected(&rooms->edges))
 			break ;
 		way = dijkstra(rooms);
 	}
-	*pathes = nb_of_pathes(&ways, ant);
+	*pathes = v_size(&ways);
 	return (ways);
 }
