@@ -6,38 +6,12 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/27 21:01:07 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/28 23:53:39 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
-
-void		del_ways(t_vec *vec)
-{
-	int i;
-
-	i = 0;
-	while (i < v_size(vec))
-	{
-		v_del((t_vec *)v_get(vec, i));
-		++i;
-	}
-	v_del(vec);
-}
-
-void		del_vec_t_ant(t_vec *vec, int ants)
-{
-	int i;
-
-	i = 0;
-	while (i < ants)
-	{
-		free(((t_ant *)v_get(vec, i))->way);
-		++i;
-	}
-	v_del(vec);
-}
 
 void		print_ant_s_travel(t_ant ant_info, char **names, int *ant_max)
 {
@@ -52,20 +26,15 @@ void		print_ant_s_travel(t_ant ant_info, char **names, int *ant_max)
 	ft_putchar(' ');
 }
 
-void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
+t_vec		give_antmax_value(int *ants, int nb_ants, int pathes, t_vec *ways)
 {
-	int		ant_max;
 	int		i;
+	int		ant_max;
 	t_vec	ant;
-	int		nb_ants;
 
-	i = 0;
-	nb_ants = 0;
-	while (ants[i] != 0)
-		nb_ants += ants[i++];
+	ant = v_new(sizeof(t_ant));
 	i = 0;
 	ant_max = 0;
-	ant = v_new(sizeof(t_ant));
 	while (ant_max <= nb_ants)
 	{
 		if (i == pathes)
@@ -79,6 +48,23 @@ void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
 			break ;
 		++i;
 	}
+	return (ant);
+}
+
+void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
+{
+	int		ant_max;
+	int		i;
+	t_vec	ant;
+	int		nb_ants;
+
+	i = 0;
+	nb_ants = 0;
+	while (ants[i] != 0)
+		nb_ants += ants[i++];
+	i = 0;
+	ant = give_antmax_value(ants, nb_ants, pathes, ways);
+	ant_max = nb_ants;
 	while (ant_max > 0)
 	{
 		i = 0;
@@ -92,24 +78,10 @@ void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
 	del_vec_t_ant(&ant, nb_ants);
 }
 
-void		print_way(t_vec *ways)
+void		i_to_0(int *size_bef, int *i)
 {
-	t_vec	tmp;
-	int		i;
-	int		y;
-
-	i = 0;
-	while (i < v_size(ways))
-	{
-		tmp = *(t_vec *)v_get(ways, i);
-		++i;
-		y = 0;
-		while (y < v_size(&tmp))
-		{
-			printf("%i ", *(int *)v_get(&tmp, y++));
-		}
-		printf("\n");
-	}
+	*size_bef = 0;
+	*i = 0;
 }
 
 void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
@@ -121,28 +93,14 @@ void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
 
 	size_bef = 0;
 	i = 0;
-	ant_each = (int *)malloc(sizeof(int) * (v_size(&ways) + 1));
-	while (i <= v_size(&ways))
-		ant_each[i++] = 0;
-	i = 0;
+	ant_each = ini_ant_each(ways);
 	while (ant > 0)
 	{
 		if (i == v_size(&ways))
-		{
-			size_bef = 0;
-			i = 0;
-		}
+			i_to_0(&size_bef, &i);
 		way = *(t_vec *)v_get(&ways, i);
-		if (i != 0)
-		{
-			if (v_size(&way) + ant_each[i] < size_bef + ant_each[i - 1])
-			{
-				++ant_each[i];
-				--ant;
-				size_bef = v_size(&way);
-			}
-		}
-		else
+		if ((v_size(&way) + ant_each[i] < size_bef + ant_each[i - 1] && i != 0)
+				|| i == 0)
 		{
 			++ant_each[i];
 			--ant;

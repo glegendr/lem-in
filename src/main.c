@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/27 20:54:53 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/29 00:02:46 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,16 @@ char		**tab_join(char **tab, char *s)
 	return (tmp);
 }
 
-char		**read_instructions(int *ant, char *fichier)
+char		**read_instructions(int *ant)
 {
 	char	**tab;
 	char	*s;
 	int		i;
 	int		ret;
-	int		fd = open(fichier, O_RDONLY);
 
 	tab = NULL;
 	s = NULL;
-	while ((ret = get_next_line(fd, &s)) == 1)
+	while ((ret = get_next_line(0, &s)) == 1)
 	{
 		tab = tab_join(tab, s);
 		free(s);
@@ -77,7 +76,7 @@ char		**read_instructions(int *ant, char *fichier)
 			del_tab(tab);
 			error("ant number is not well formed");
 		}
-	*ant = ft_atoi(tab[0]);
+	*ant = ft_atolli(tab[0]);
 	return (tab);
 }
 
@@ -100,7 +99,7 @@ void		into_rooms(t_rooms *rooms, char **names, t_mat mat)
 	rooms->edges = mat;
 }
 
-int			main(int ac, char **argv)
+int			main(void)
 {
 	char	**tab;
 	t_mat	mat;
@@ -108,9 +107,8 @@ int			main(int ac, char **argv)
 	t_rooms	rooms;
 	int		pathes;
 
-	(void)ac;
 	pathes = 0;
-	tab = read_instructions(&ant, argv[1]);
+	tab = read_instructions(&ant);
 	if (ant <= 0)
 	{
 		del_tab(tab);
@@ -118,7 +116,7 @@ int			main(int ac, char **argv)
 	}
 	tab = pars(tab, &mat);
 	into_rooms(&rooms, tab, mat);
-	print_ant(algo(&rooms, ant, &pathes), pathes, ant, &rooms);
+	print_ant(algo(&rooms, &pathes), pathes, ant, &rooms);
 	mat_del(&mat);
 	del_tab(tab);
 	del_tab(rooms.names);

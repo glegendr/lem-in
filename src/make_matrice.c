@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/27 20:59:41 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/29 00:53:39 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	while (ft_strcmp(names[i], liaisons[1]) != 0 && names[i])
 	{
 		++i;
-		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[0]))
+		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[1]))
 			error("");
 	}
 	y = i;
@@ -72,24 +72,36 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	mat_set(mat, x, y, 1);
 }
 
-char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
+char		**ini_names(t_vec *vec)
 {
 	int		i;
 	char	**names;
-	char	**liaisons;
 	t_st	t;
 
 	i = 0;
-	entry_and_end(vec);
-	*mat = mat_new(v_size(vec));
-	ini_mat(mat, v_size(vec));
 	names = (char **)malloc(sizeof(char *) * (v_size(vec) + 1));
 	while (i < v_size(vec))
 	{
 		t = *(t_st *)v_get(vec, i);
 		names[i++] = ft_strdup(t.nom);
+		if (t.nom[0] == 'L')
+			error("invalid room name");
 	}
 	names[i] = NULL;
+	return (names);
+}
+
+char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
+{
+	char	**names;
+	char	**liaisons;
+
+	if (tab[index] == NULL)
+		error("inexisting ways");
+	entry_and_end(vec);
+	*mat = mat_new(v_size(vec));
+	ini_mat(mat, v_size(vec));
+	names = ini_names(vec);
 	while (tab[index++])
 		if (tab[index - 1][0] != '#')
 		{

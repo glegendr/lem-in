@@ -6,12 +6,24 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:28:26 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/27 20:41:12 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/28 23:57:13 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
+
+int			*ini_ant_each(t_vec ways)
+{
+	int i;
+	int *ant_each;
+
+	i = 0;
+	ant_each = (int *)malloc(sizeof(int) * (v_size(&ways) + 1));
+	while (i <= v_size(&ways))
+		ant_each[i++] = 0;
+	return (ant_each);
+}
 
 int			is_someone_in_my_room(int room, t_vec *ants, int my_room)
 {
