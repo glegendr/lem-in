@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:18:20 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:53:39 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 15:12:26 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void		print_ant_s_travel(t_ant ant_info, char **names, int *ant_max)
 {
+	(void)names;
 	if (ant_info.room == 1)
 		*ant_max -= 1;
 	else if (ant_info.room == -1 || ant_info.room == 0)
@@ -41,6 +42,7 @@ t_vec		give_antmax_value(int *ants, int nb_ants, int pathes, t_vec *ways)
 			i = 0;
 		if (ants[i] != 0)
 		{
+			write(1, &ant_max, 0);
 			ini_ant(&ant, ++ant_max, *(t_vec *)v_get(ways, i));
 			ants[i] -= 1;
 		}
@@ -68,31 +70,41 @@ void		ant_s_travel(t_vec *ways, int *ants, char **names, int pathes)
 	while (ant_max > 0)
 	{
 		i = 0;
+		while ((*(t_ant *)v_get(&ant, i)).room == -1)
+			++i;
 		while (i < v_size(&ant))
 		{
-			next_room(v_get(&ant, i), &ant, i);
-			print_ant_s_travel(*(t_ant *)v_get(&ant, i++), names, &ant_max);
+			if (next_room((t_ant *)v_get(&ant, i), &ant, i))
+				print_ant_s_travel(*(t_ant *)v_get(&ant, i), names, &ant_max);
+			++i;
 		}
 		ft_putchar('\n');
 	}
 	del_vec_t_ant(&ant, nb_ants);
 }
 
-void		i_to_0(int *size_bef, int *i)
+int			check_pathes(t_vec ways, char **tab, int *i, int *size_bef)
 {
+	int pathes;
+
+	if ((pathes = v_size(&ways)) == 0)
+		error("no way founded");
+	ft_putstarstr(tab);
+	write(1, "\n", 1);
 	*size_bef = 0;
 	*i = 0;
+	return (pathes);
 }
 
-void		print_ant(t_vec ways, int pathes, int ant, t_rooms *rooms)
+void		print_ant(t_vec ways, char **tab, int ant, t_rooms *rooms)
 {
 	t_vec	way;
 	int		*ant_each;
 	int		i;
 	int		size_bef;
+	int		pathes;
 
-	size_bef = 0;
-	i = 0;
+	pathes = check_pathes(ways, tab, &i, &size_bef);
 	ant_each = ini_ant_each(ways);
 	while (ant > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 07:10:42 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/29 00:02:46 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 13:19:18 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,19 +105,19 @@ int			main(void)
 	t_mat	mat;
 	int		ant;
 	t_rooms	rooms;
-	int		pathes;
+	char	**names;
 
-	pathes = 0;
 	tab = read_instructions(&ant);
 	if (ant <= 0)
 	{
 		del_tab(tab);
 		error("ant number is not well formed");
 	}
-	tab = pars(tab, &mat);
-	into_rooms(&rooms, tab, mat);
-	print_ant(algo(&rooms, &pathes), pathes, ant, &rooms);
+	names = pars(tab, &mat);
+	into_rooms(&rooms, names, mat);
+	print_ant(algo(&rooms), tab, ant, &rooms);
 	mat_del(&mat);
 	del_tab(tab);
+	del_tab(names);
 	del_tab(rooms.names);
 }

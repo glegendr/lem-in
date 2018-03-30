@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 01:44:21 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:52:16 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 13:14:31 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int			nb_of_pathes(t_vec *ways, int ant)
 	return (i);
 }
 
-t_vec		algo(t_rooms *rooms, int *pathes)
+t_vec		algo(t_rooms *rooms)
 {
 	t_vec	way;
 	t_vec	ways;
@@ -102,6 +102,5 @@ t_vec		algo(t_rooms *rooms, int *pathes)
 			break ;
 		way = dijkstra(rooms);
 	}
-	*pathes = v_size(&ways);
 	return (ways);
 }

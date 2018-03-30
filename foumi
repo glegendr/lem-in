@@ -1,0 +1,17 @@
+7500
+##start
+start 2 5
+##end
+end 22 2
+1 1 1
+22 2 2
+3 3 3
+4 4 4
+end-1
+start-1
+start-22
+end-22
+start-3
+3-end
+start-4
+4-end

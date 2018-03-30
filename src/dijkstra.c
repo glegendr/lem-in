@@ -6,11 +6,18 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 21:46:18 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/21 00:41:49 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 14:32:46 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "lem_in.h"
+
+void		i_to_0(int *size_bef, int *i)
+{
+	*size_bef = 0;
+	*i = 0;
+}
 
 void		del_pathes(t_mat *mat, t_vec vec)
 {
@@ -88,7 +95,11 @@ t_vec		dijkstra(t_rooms *rooms)
 	while ((ret = make_children(&queue, &rooms->edges)) == 0)
 		v_sort_size(&queue);
 	if (ret == -1)
+	{
+		way = v_new(sizeof(int));
+		v_push_int(&way, 0);
 		return (way);
+	}
 	del_pathes(&rooms->edges, *(t_vec *)v_get(&queue, 0));
 	way = v_copy((t_vec *)v_get(&queue, 0));
 	del_ways(&queue);

@@ -1,0 +1,4 @@
+is_lib = true
+name = "libft"
+[dependencies]
+libmem = "https://github.com/glegendr/libmem.git"

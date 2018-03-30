@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 23:52:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/29 00:53:39 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 14:34:50 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ void		ini_mat(t_mat *mat, int size)
 void		into_mat(t_mat *mat, char **liaisons, char **names)
 {
 	int x;
-	int y;
 	int i;
 
 	i = 0;
-	y = 0;
 	if (liaisons[0] == NULL || liaisons[1] == NULL || liaisons[2] != NULL)
 		error("");
 	while (ft_strcmp(names[i], liaisons[0]))
@@ -67,9 +65,10 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[1]))
 			error("");
 	}
-	y = i;
-	mat_set(mat, y, x, 1);
-	mat_set(mat, x, y, 1);
+	if (x == i)
+		error("");
+	mat_set(mat, i, x, 1);
+	mat_set(mat, x, i, 1);
 }
 
 char		**ini_names(t_vec *vec)
@@ -109,6 +108,6 @@ char		**make_matrice(t_vec *vec, int index, t_mat *mat, char **tab)
 			into_mat(mat, liaisons, names);
 			del_tab(liaisons);
 		}
-	del_tab_and_t_st(tab, vec);
+	del_vec_t_st(vec);
 	return (names);
 }

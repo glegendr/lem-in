@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:28:26 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:57:13 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/30 15:09:23 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,31 @@ int			search_end(int *way)
 	return (i);
 }
 
-void		next_room(t_ant *ant_info, t_vec *ant, int i)
+int			next_room(t_ant *ant_info, t_vec *ant, int i)
 {
 	int		y;
 
-	if (ant_info->room == 1 || ant_info->room == -1)
+	if (ant_info->room == -1)
+		return (0);
+	if (ant_info->room == 1)
 	{
 		ant_info->room = -1;
-		return ;
+		return (0);
 	}
 	if (i == 0)
 	{
 		while (ant_info->way[i] != ant_info->room)
 			++i;
 		ant_info->room = ant_info->way[i + 1];
-		return ;
+		return (1);
 	}
 	y = 0;
 	while (ant_info->way[y] != ant_info->room)
 		++y;
 	if (is_someone_in_my_room(ant_info->way[y + 1], ant, ant_info->way[y]))
-		return ;
+		return (0);
 	ant_info->room = ant_info->way[y + 1];
+	return (1);
 }
 
 void		ini_ant(t_vec *ant, int name, t_vec tmp)
@@ -89,6 +92,7 @@ void		ini_ant(t_vec *ant, int name, t_vec tmp)
 	t_ant	ant_info;
 	int		i;
 
+	write(1, &name, 0);
 	if ((ant_info.way = (int *)malloc(sizeof(int) * v_size(&tmp))) == NULL)
 		return ;
 	i = 0;
