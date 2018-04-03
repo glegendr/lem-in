@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 17:52:51 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:55:23 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/04/03 16:36:25 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		v_push_first(t_vec *vec, void *elem)
 						(NB_ELEM_INI + vec->private_elem_cap)
 						* vec->private_elem_size)) == NULL)
 			return ;
-		vec->private_elem_cap += NB_ELEM_INI * vec->private_elem_size;
+		vec->private_elem_cap += NB_ELEM_INI;
 	}
 	while (i > 0)
 	{

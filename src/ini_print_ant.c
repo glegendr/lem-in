@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:28:26 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/30 15:09:23 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/04/03 16:21:51 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int			*ini_ant_each(t_vec ways)
 	int *ant_each;
 
 	i = 0;
-	ant_each = (int *)malloc(sizeof(int) * (v_size(&ways) + 1));
+	if ((ant_each = (int *)malloc(sizeof(int) * (v_size(&ways) + 1))) == NULL)
+		return (0);
 	while (i <= v_size(&ways))
 		ant_each[i++] = 0;
 	return (ant_each);
@@ -69,6 +70,7 @@ int			next_room(t_ant *ant_info, t_vec *ant, int i)
 	if (ant_info->room == 1)
 	{
 		ant_info->room = -1;
+		ant_info->name = 0;
 		return (0);
 	}
 	if (i == 0)
@@ -92,7 +94,6 @@ void		ini_ant(t_vec *ant, int name, t_vec tmp)
 	t_ant	ant_info;
 	int		i;
 
-	write(1, &name, 0);
 	if ((ant_info.way = (int *)malloc(sizeof(int) * v_size(&tmp))) == NULL)
 		return ;
 	i = 0;

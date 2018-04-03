@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 20:26:53 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:34:07 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/04/03 16:32:47 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define VECTOR_H
 # include <stddef.h>
 # include <stdlib.h>
-# define NB_ELEM_INI 320
+# define NB_ELEM_INI 32
 
 typedef struct	s_vec
 {

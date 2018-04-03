@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 21:16:12 by glegendr          #+#    #+#             */
-/*   Updated: 2018/03/28 23:55:19 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/04/03 16:32:32 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		v_push(t_vec *vec, void *elem)
 						(NB_ELEM_INI + vec->private_elem_cap)
 						* vec->private_elem_size)) == NULL)
 			return ;
-		vec->private_elem_cap += NB_ELEM_INI * vec->private_elem_size;
+		vec->private_elem_cap += NB_ELEM_INI;
 	}
 	ft_memcpy(v_get(vec, vec->private_elem_nb), elem, vec->private_elem_size);
 	++vec->private_elem_nb;
