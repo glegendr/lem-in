@@ -39,7 +39,7 @@ int				*ini_ant_each(t_vec ways);
 int				search_end(int *way);
 int				next_room(t_ant *ant_info, t_vec *ant, int i);
 void			ini_ant(t_vec *ant, int all_ants, t_vec tmp);
-t_vec			dijkstra(t_rooms *rooms);
+t_vec			dijkstra(t_rooms *rooms, int paths);
 void			print_vec(t_vec *vec);
 void			print_non_queue(t_vec *vec);
 void			del_tab(char **tab);

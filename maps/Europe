@@ -1,0 +1,119 @@
+30
+Portugal 2 2
+Espagne 3 2
+France 3 3
+Belgique 3 4
+Hollande 4 4
+luxembourg 9 9
+Allemagne 4 3
+Danemark 0 9
+Suisse 3 2
+Italie 3 1
+Autriche 4 2
+RC 4 4
+Pologne 4 5
+Bielorussie 5 5
+lituanie 5 6
+lettonie 6 6
+Estonie 6 7
+Finlande 7 7
+Suede 7 8
+Norvege 8 9
+Ukraine 8 9
+Moldavie 0 9
+Roumanie 0 9
+Slovaquie 0 9
+Hongrie 0 9
+Slovenie 98 4
+##start
+Croatie 7 6
+Bosnie 7 6
+Serbie 8 8
+Montenegro 2 3
+Albanie 8 8
+##end
+Macedoine  2 3
+Grece 2 3
+Turquie 8 8
+Bulgarie 9 9
+RU 9 8
+Irlande 8 7
+Islande 8 9
+Malte 8 6
+Chypre 8 8
+Russie 9 6
+###Frontieres Terrestres
+Portugal-Espagne
+Espagne-France
+France-Belgique
+France-luxembourg
+France-Allemagne
+France-Suisse
+France-Italie
+Belgique-Hollande
+Belgique-Allemagne
+Belgique-luxembourg
+Suisse-Allemagne
+Suisse-Autriche
+Suisse-Italie
+Hollande-Allemagne
+Autriche-RC
+Autriche-Slovaquie
+Autriche-Hongrie
+Autriche-Slovenie
+Autriche-Italie
+Italie-Slovenie
+Allemagne-Danemark
+Allemagne-Pologne
+Allemagne-RC
+Allemagne-Autriche
+Allemagne-luxembourg
+RC-Pologne
+RC-Slovaquie
+Slovaquie-Pologne
+Slovaquie-Ukraine
+Slovaquie-Hongrie
+Hongrie-Roumanie
+Hongrie-Serbie
+Hongrie-Croatie
+Hongrie-Slovenie
+Slovenie-Croatie
+Danemark-Suede
+Pologne-lituanie
+Pologne-Bielorussie
+Pologne-Ukraine
+Ukraine-Russie
+Ukraine-Bielorussie
+Ukraine-Moldavie
+Ukraine-Roumanie
+Croatie-Bosnie
+Croatie-Serbie
+Serbie-Montenegro
+Serbie-Macedoine
+Roumanie-Serbie
+Roumanie-Bulgarie
+Roumanie-Moldavie
+Bosnie-Serbie
+Bosnie-Montenegro
+Montenegro-Albanie
+Albanie-Macedoine
+Albanie-Grece
+Albanie-Serbie
+Bulgarie-Serbie
+Bulgarie-Macedoine
+Bulgarie-Grece
+Macedoine-Grece
+Bulgarie-Turquie
+Grece-Turquie
+Suede-Norvege
+Suede-Finlande
+Norvege-Finlande
+lituanie-lettonie
+lituanie-Bielorussie
+lettonie-Bielorussie
+lettonie-Russie
+lettonie-Estonie
+Estonie-Russie
+Russie-Finlande
+Bielorussie-Russie
+RU-Irlande

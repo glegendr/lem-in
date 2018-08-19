@@ -54,7 +54,7 @@ int			isn_t_in_vec(t_vec *vec, int nb)
 	return (1);
 }
 
-int			make_children(t_vec *queue, t_mat *edges)
+int			make_children(t_vec *queue, t_mat *edges, int path)
 {
 	int		i;
 	t_vec	tmp;
@@ -63,7 +63,7 @@ int			make_children(t_vec *queue, t_mat *edges)
 
 	ret = 0;
 	i = 0;
-	if (v_size(queue) < 1)
+	if (v_size(queue) < 1 || (v_size(queue) > 500 && path != 0))
 		return (-1);
 	tmp = v_copy(v_get(queue, v_size(queue) - 1));
 	v_del(v_get(queue, v_size(queue) - 1));
@@ -82,7 +82,7 @@ int			make_children(t_vec *queue, t_mat *edges)
 	return (ret);
 }
 
-t_vec		dijkstra(t_rooms *rooms)
+t_vec		dijkstra(t_rooms *rooms, int path)
 {
 	t_vec	queue;
 	t_vec	way;
@@ -92,7 +92,7 @@ t_vec		dijkstra(t_rooms *rooms)
 	queue = v_new(sizeof(t_vec));
 	v_push_int(&way, 0);
 	v_push(&queue, &way);
-	while ((ret = make_children(&queue, &rooms->edges)) == 0)
+	while ((ret = make_children(&queue, &rooms->edges, path)) == 0)
 		v_sort_size(&queue);
 	if (ret == -1)
 	{

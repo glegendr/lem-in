@@ -45,11 +45,9 @@ int			is_start_or_end_connected(t_mat *mat)
 int			is_way_acceptable(t_vec *ways, int ant)
 {
 	int i;
-	int y;
 	int size;
 
 	i = 0;
-	y = 0;
 	size = 0;
 	if (v_size(ways) < 1)
 		return (1);
@@ -92,15 +90,18 @@ t_vec		algo(t_rooms *rooms)
 {
 	t_vec	way;
 	t_vec	ways;
+	int	paths;
 
 	ways = v_new(sizeof(t_vec));
-	way = dijkstra(rooms);
+	paths = v_size(&ways);
+	way = dijkstra(rooms, paths);
 	while (v_size(&way) > 1)
 	{
 		v_push(&ways, &way);
+		paths = v_size(&ways);
 		if (!is_start_or_end_connected(&rooms->edges))
 			break ;
-		way = dijkstra(rooms);
+		way = dijkstra(rooms, paths);
 	}
 	return (ways);
 }
