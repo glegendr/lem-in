@@ -55,7 +55,7 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	{
 		++i;
 		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[0]))
-			error("");
+			error("premiere liaison inconue");
 	}
 	x = i;
 	i = 0;
@@ -63,7 +63,7 @@ void		into_mat(t_mat *mat, char **liaisons, char **names)
 	{
 		++i;
 		if (names[i] == NULL && ft_strcmp(names[i - 1], liaisons[1]))
-			error("");
+			error("seconde liaison inconue");
 	}
 	if (x == i)
 		error("");
